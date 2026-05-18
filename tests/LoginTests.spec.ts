@@ -1,28 +1,45 @@
-import { test, expect } from '@playwright/test'
 
+import { test, expect } from '@playwright/test';
 
-test('Login with valid UI user', async ({ page }) => {
+test('Login with valid UI user (robust)', async ({ page }) => {
 
-  // Step 1: Open site
+    // ✅ Step 1: Open site
+    await page.goto('https://automationexercise.com/');
+    await page.waitForLoadState('load');
 
-await page.goto('https://automationexercise.com/')
-await page.waitForLoadState('load')
+    // ✅ Step 2: Handle popup if exists
+    const consentBtn = page.locator('button:has-text("Consent")');
+    if (await consentBtn.isVisible().catch(() => false)) {
+        await consentBtn.click();
+    }
 
-// give UI time (important in CI)
-await page.waitForTimeout(3000);
+    // ✅ Step 3: Stabilize UI (important for CI)
+    await page.waitForTimeout(2000);
 
-// try both states
-const loginBtn = page.locator('text=Signup / Login')
+    // ✅ Step 4: Check if already logged in
+    const loggedInText = page.locator('text=Logged in as');
 
-if (await loginBtn.isVisible().catch(() => false)) {
-    await loginBtn.click();
+    if (await loggedInText.isVisible().catch(() => false)) {
+        console.log('✅ Already logged in');
+    } else {
 
-    await page.fill('input[data-qa="login-email"]', 'xihilev322@codoteam.com')
-    await page.fill('input[data-qa="login-password"]', '123456')
+        console.log('🔐 Performing login');
 
-    await page.click('button[data-qa="login-button"]')
-}
+        // ✅ Step 5: Click login
+        const loginBtn = page.locator('text=Signup / Login').first();
 
-// just validate page loads
-await expect(page.locator('text=Logged in as')).toBeVisible()
-})
+        await loginBtn.waitFor({ state: 'visible', timeout: 15000 });
+        await loginBtn.click();
+
+        // ✅ Step 6: Fill credentials (REAL USER)
+        await page.fill('input[data-qa="login-email"]', 'your@email.com');
+        await page.fill('input[data-qa="login-password"]', '123456');
+
+        await page.click('button[data-qa="login-button"]');
+    }
+
+    // ✅ ✅ Step 7: VALIDATE LOGIN SUCCESS (MOST IMPORTANT)
+    await expect(page.locator('text=Logged in as')).toBeVisible({ timeout: 10000 });
+
+});
+``
