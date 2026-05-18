@@ -6,17 +6,20 @@ test('User can add product to cart', async ({ page }) => {
     const productPage = new ProductPage(page)
     const cartPage = new CartPage(page)
 
-    await page.goto('https://automationexercise.com/')
-    await page.waitForLoadState('networkidle');
 
     await productPage.goToProducts()
-    await expect(page).toHaveURL(/products/)
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/products/, { timeout: 15000 })
 
     await productPage.verifyProductsPageLoaded()
 
     await productPage.addFirstProductToCart()
-    await productPage.viewCart()
+    await page.waitForLoadState('networkidle');
 
-    await expect(page).toHaveURL(/view_cart/)
+    await productPage.viewCart()
+    await page.waitForLoadState('networkidle');
+
+    await expect(page).toHaveURL(/view_cart/, { timeout: 15000 })
     await cartPage.verifyProductInCart()
+
 })

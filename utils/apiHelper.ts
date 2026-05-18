@@ -13,22 +13,20 @@ export async function getUsers() {
         throw new Error('Failed to fetch users');
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
     }
 
-    // Get products from AutomationExercise API
+    // ✅ Get products from AutomationExercise API
     export async function getProducts() {
-    const apiContext = await request.newContext()
+    const apiContext = await request.newContext();
 
     const response = await apiContext.get(
         'https://automationexercise.com/api/productsList'
     );
 
     if (response.status() !== 200) {
-        throw new Error('Failed to fetch products')
+        throw new Error('Failed to fetch products');
     }
 
-    const data = await response.json()
-    return data;
+    return await response.json();
 }
