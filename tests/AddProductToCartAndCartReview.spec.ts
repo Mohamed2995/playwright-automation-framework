@@ -7,6 +7,7 @@ test('User can add product to cart', async ({ page }) => {
     const cartPage = new CartPage(page)
 
     await page.goto('https://automationexercise.com/')
+    await page.waitForLoadState('networkidle');
 
     await productPage.goToProducts()
     await expect(page).toHaveURL(/products/)

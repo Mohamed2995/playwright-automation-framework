@@ -18,19 +18,24 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 1,
+  retries: 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-  baseURL: 'https://automationexercise.com/',
+  
+use: {
+  baseURL: 'https://automationexercise.com',
   storageState: 'storageState.json',
 
-  trace: 'on-first-retry',
-  screenshot: 'on',
-  video: 'on',
+  actionTimeout: 15000,
+  navigationTimeout: 30000,
+
+  trace: 'retain-on-failure',
+  screenshot: 'only-on-failure',
+  video: 'retain-on-failure'
+
   },
 
   projects: [

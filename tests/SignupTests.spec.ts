@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test'
 import { HomePage } from '../Pages/HomePage'
 import { SignupPage } from '../Pages/SignupPage'
 import { userData } from '../utils/testData'
+test.use({ storageState: undefined });
 
 test('User can signup successfully', async ({ page }) => {
   const homePage = new HomePage(page)

@@ -1,8 +1,5 @@
 import {test, expect} from '../Fixtures/testBase'
 
-  test.use({ storageState: undefined })
-
-
   test('@e2e', async ({
     productPage,
     cartPage,
@@ -12,10 +9,12 @@ import {test, expect} from '../Fixtures/testBase'
 
   await test.step('Open home page', async () => {
     await page.goto('/');
+    await page.waitForLoadState('networkidle');
   })
 
   await test.step('Navigate to products page', async () => {
     await productPage.goToProducts();
+    await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/products/);
   })
 

@@ -2,23 +2,23 @@
   "cookies": [
     {
       "name": "sessionid",
-      "value": "v5imc2x3hn031d4ckso1betvwwarilzz",
+      "value": "89ypte7ekmkn4trtvpdms39bnuwwqwhn",
       "domain": "automationexercise.com",
       "path": "/",
-      "expires": 1780309250.982,
+      "expires": 1780317304.214,
       "httpOnly": true,
       "secure": false,
-      "sameSite": "Lax"
+      "sameSite": "None"
     },
     {
       "name": "csrftoken",
-      "value": "5uoMNROB9PSukDXtuWXLeQQHY5qwXK5AxEhdfO5KPxGPl0y4OJNC6Cs5qsyE6bxb",
+      "value": "WQTPFlvRkVzEwDwMy4zRSqNoESijjI4ZPAh0H8XNBZY72JiCWEN1nB3GzqfAZZXI",
       "domain": "automationexercise.com",
       "path": "/",
-      "expires": 1810549251.755,
+      "expires": 1810557427.918,
       "httpOnly": false,
       "secure": false,
-      "sameSite": "Lax"
+      "sameSite": "None"
     }
   ],
   "origins": []
