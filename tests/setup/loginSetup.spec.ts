@@ -1,18 +1,22 @@
 
-import { test } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
+import { test as setup } from '@playwright/test';
+import { userData } from '../../utils/testData';
 
-test('Login and save session', async ({ page }) => {
+setup('authenticate', async ({ page }) => {
 
-    const loginPage = new LoginPage(page);
+  await page.goto('https://automationexercise.com/');
+  await page.waitForLoadState('load');
 
-    await page.goto('https://automationexercise.com/')
+  await page.click('text=Signup / Login');
 
-    await page.click('a[href="/login"]')
+  await page.fill('input[data-qa="login-email"]', userData.email);
+  await page.fill('input[data-qa="login-password"]', userData.password);
 
-  // Use existing valid account
-    await loginPage.login('xihilev322@codoteam.com', '123456')
+  await page.click('button[data-qa="login-button"]');
 
-  // Save session
-    await page.context().storageState({ path: 'storageState.json' })
+  await page.waitForURL(/.*automationexercise.*/);
+
+  // ✅ save session
+  await page.context().storageState({ path: 'storageState.json' });
+
 });
