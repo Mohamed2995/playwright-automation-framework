@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 import { userData } from '../utils/testData';
 
-test('Login with valid UI user', async ({ page }) => {
+test('@login Login with valid UI user (robust)', async ({ page }) => {
 
     
 // Step 1: Open site

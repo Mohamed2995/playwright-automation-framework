@@ -26,8 +26,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests (Smoke)
+      - name: Run Playwright tests
         run: npx playwright test --grep-invert "@login"
+
 
       - name: Upload test results (video, traces)
         if: always()
