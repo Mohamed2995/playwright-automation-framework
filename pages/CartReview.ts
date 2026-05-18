@@ -1,11 +1,17 @@
 
-import { Page } from '@playwright/test'
+import { Page, expect } from '@playwright/test';
 
-export class CartPage {constructor(private page: Page) {}
+export class CartPage {
 
-    cartItems = 'td.cart_product'
+    constructor(private page: Page) {}
+
+    cartItems = 'td.cart_product';
 
     async verifyProductInCart() {
-    await this.page.locator(this.cartItems).waitFor()
+
+        const cartItem = this.page.locator(this.cartItems);
+
+        await expect(cartItem.first()).toBeVisible({ timeout: 15000 });
+
     }
 }

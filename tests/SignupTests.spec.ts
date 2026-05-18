@@ -1,5 +1,5 @@
+
 import { test, expect } from '@playwright/test';
-import { HomePage } from '../Pages/HomePage';
 import { SignupPage } from '../Pages/SignupPage';
 import { userData } from '../utils/testData';
 
@@ -7,20 +7,30 @@ test.use({ storageState: undefined });
 
 test('User can signup successfully', async ({ page }) => {
 
-  const homePage = new HomePage(page);
   const signupPage = new SignupPage(page);
-
   const email = `test${Date.now()}@mail.com`;
 
-  await homePage.navigate();
-  await page.waitForLoadState('networkidle');
+  await page.goto('https://automationexercise.com/');
+  await page.waitForLoadState('load');
 
-  await homePage.clickSignupLogin();
+  // ✅ FIX: if already logged in → logout first
+  const logoutBtn = page.locator('text=Logout');
+
+  if (await logoutBtn.isVisible().catch(() => false)) {
+    await logoutBtn.click();
+    await page.waitForLoadState('load');
+  }
+
+  // ✅ Now login/signup button will appear
+  const loginBtn = page.locator('text=Signup / Login');
+
+  await loginBtn.waitFor({ state: 'visible', timeout: 20000 });
+  await loginBtn.click();
 
   await signupPage.enterNameAndEmail(userData.name, email);
-  await page.waitForLoadState('networkidle');
 
-  await expect(page.locator('#password')).toBeVisible({ timeout: 15000 });
+  await expect(page.locator('#password'))
+    .toBeVisible({ timeout: 15000 });
 
   await signupPage.fillAccountDetails(userData);
   await signupPage.createAccount();

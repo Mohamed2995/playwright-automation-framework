@@ -8,7 +8,7 @@ setup('authenticate', async ({ page }) => {
   await page.waitForLoadState('networkidle');
 
   const logoutBtn = page.locator('text=Logout');
-  const loginBtn = page.locator('text=Signup / Login').first();
+  const loginBtn = page.locator('a[href="/login"]').first();
 
   if (await logoutBtn.isVisible().catch(() => false)) {
     // ✅ already logged in
