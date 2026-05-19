@@ -26,11 +26,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # ✅ Run login setup (storageState creation)
+      # Run login setup (storageState creation)
       - name: Run login setup
         run: npx playwright test tests/setup/loginSetup.spec.ts
 
-      # ✅ Run all tests (no need to skip anything anymore)
+      # Run all tests (no need to skip anything anymore)
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @signup
 
