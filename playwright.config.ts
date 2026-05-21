@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as fs from 'fs';
 
 /**
  * Read environment variables from file.
@@ -30,7 +31,7 @@ export default defineConfig({
   
 use: {
   baseURL: 'https://automationexercise.com',
-  storageState: 'storageState.json',
+  storageState: fs.existsSync('storageState.json') ? 'storageState.json' : undefined,
 
   actionTimeout: 15000,
   navigationTimeout: 30000,
