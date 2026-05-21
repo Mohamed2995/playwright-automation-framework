@@ -33,8 +33,8 @@ use: {
   baseURL: 'https://automationexercise.com',
   storageState: fs.existsSync('storageState.json') ? 'storageState.json' : undefined,
 
-  actionTimeout: 15000,
-  navigationTimeout: 30000,
+  actionTimeout: 30000,
+  navigationTimeout: 60000,
 
   trace: 'retain-on-failure',
   screenshot: 'only-on-failure',
