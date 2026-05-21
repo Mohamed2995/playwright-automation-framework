@@ -21,8 +21,8 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Use fewer workers for stability */
-  workers: process.env.CI ? 1 : 2,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  workers: process.env.CI ? 1 : 2,  /* Increase timeout for slow CI environments */
+  timeout: process.env.CI ? 120000 : 30000,  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
     ['junit', { outputFile: 'test-results/junit.xml' }]
@@ -33,8 +33,8 @@ use: {
   baseURL: 'https://automationexercise.com',
   storageState: fs.existsSync('storageState.json') ? 'storageState.json' : undefined,
 
-  actionTimeout: 30000,
-  navigationTimeout: 60000,
+  actionTimeout: 60000,
+  navigationTimeout: 120000,
 
   trace: 'retain-on-failure',
   screenshot: 'only-on-failure',
