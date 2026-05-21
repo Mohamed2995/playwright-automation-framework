@@ -1,11 +1,10 @@
-
 import { test, expect } from '@playwright/test'
-import { SignupPage } from '../Pages/SignupPage'
+import { SignupPage } from '../pages/SignupPage'
 import { userData } from '../utils/testData'
 
 test('User can signup successfully', async ({ browser }) => {
 
-  // ✅ CRITICAL FIX → create fresh context manually
+  // CRITICAL FIX → create fresh context manually
   const context = await browser.newContext()
   const page = await context.newPage()
 

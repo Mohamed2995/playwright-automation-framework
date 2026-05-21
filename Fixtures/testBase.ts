@@ -1,7 +1,7 @@
 
 import { test as base } from '@playwright/test'
-import { HomePage } from '../Pages/HomePage'
-import { SignupPage } from '../Pages/SignupPage'
+import { HomePage } from '../pages/HomePage'
+import { SignupPage } from '../pages/SignupPage'
 import { LoginPage } from '../pages/LoginPage'
 import { ProductPage } from '../pages/AddProductToCart'
 import { CartPage } from '../pages/CartReview'
