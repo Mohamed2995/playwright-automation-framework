@@ -1,10 +1,10 @@
 
 import { test as base } from '@playwright/test'
-import { HomePage } from '../pages/HomePage'
-import { SignupPage } from '../pages/SignupPage'
-import { LoginPage } from '../pages/LoginPage'
-import { ProductPage } from '../pages/AddProductToCart'
-import { CartPage } from '../pages/CartReview'
+import { HomePage } from '../pages/homePage'
+import { SignupPage } from '../pages/signupPage'
+import { LoginPage } from '../pages/loginPage'
+import { ProductPage } from '../pages/addProductToCart'
+import { CartPage } from '../pages/cartReview'
 
 type MyFixtures = {
     homePage: HomePage;

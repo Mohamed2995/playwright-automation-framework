@@ -1,50 +1,64 @@
-import { Page } from '@playwright/test'
+import { Page, expect } from '@playwright/test'
 
-export class ProductPage {constructor(private page: Page) {}
+export class ProductPage {
+  constructor(private page: Page) {}
 
   // Product locators
-    productsLink = 'a[href="/products"]'
-    productListHeader = 'h2:has-text("All Products")'
-    firstProduct = '.product-image-wrapper'
-    viewCartBtn = 'u:has-text("View Cart")'
+  private readonly productsLink = 'a[href="/products"]'
+  private readonly productListHeader = 'h2:has-text("All Products")'
+  private readonly productCard = '.product-image-wrapper'
+  private readonly viewCartBtn = 'u:has-text("View Cart")'
 
   // Search locators
-    searchInput = '#search_product'
-    searchButton = '#submit_search'
-    searchedProductsHeader = 'h2:has-text("Searched Products")'
+  private readonly searchInput = '#search_product'
+  private readonly searchButton = '#submit_search'
+  private readonly searchedProductsHeader = 'h2:has-text("Searched Products")'
 
-  // Navigate to products
-    async goToProducts() {
-    await this.page.locator(this.productsLink).click()
-    }
+  async goToProducts() {
+    await Promise.all([
+      this.page.waitForURL(/products/, { timeout: 15000 }),
+      this.page.locator(this.productsLink).first().click(),
+    ])
+    await expect(this.page.locator(this.productListHeader)).toBeVisible()
+  }
 
-    async verifyProductsPageLoaded() {
-    await this.page.locator(this.productListHeader).waitFor()
-    }
+  async verifyProductsPageLoaded() {
+    await expect(this.page.locator(this.productListHeader)).toBeVisible()
+  }
 
-  // Add to cart
-    async addFirstProductToCart() {
-    const firstProduct = this.page.locator('.product-image-wrapper').first()
-
+  async addFirstProductToCart() {
+    const firstProduct = this.page.locator(this.productCard).first()
     await firstProduct.scrollIntoViewIfNeeded()
+    await expect(firstProduct).toBeVisible()
+
+    // Hover to reveal action buttons (some layouts show Add to cart on hover)
     await firstProduct.hover()
 
-    await this.page.getByText('Add to cart').first().click()
-    await this.page.waitForSelector('u:has-text("View Cart")')
-    }
+    // Try to click the Add to cart button that's visible on the page (may not be direct child)
+    const addBtn = this.page.locator('text=Add to cart').first()
+    await addBtn.waitFor({ state: 'visible', timeout: 15000 })
+    await addBtn.click()
 
-    async viewCart() {
-    await this.page.locator(this.viewCartBtn).click()
-    }
+    // Wait for confirmation (View Cart) to appear
+    await expect(this.page.locator(this.viewCartBtn)).toBeVisible({ timeout: 15000 })
+  }
 
-  // Search methods
-    async searchProduct(productName: string) {
-    await this.page.fill(this.searchInput, productName)
-    await this.page.click(this.searchButton)
-    }
+  async viewCart() {
+    const view = this.page.locator(this.viewCartBtn).first()
+    await expect(view).toBeVisible()
+    await view.click()
+    await this.page.waitForLoadState('networkidle')
+  }
 
-    async verifySearchResults() {
-    await this.page.locator(this.searchedProductsHeader).waitFor()
-    }
+  async searchProduct(productName: string) {
+    await expect(this.page.locator(this.searchInput)).toBeVisible()
+    await this.page.locator(this.searchInput).fill(productName)
+    await this.page.locator(this.searchButton).click()
+    await expect(this.page.locator(this.searchedProductsHeader)).toBeVisible()
+  }
+
+  async verifySearchResults() {
+    await expect(this.page.locator(this.searchedProductsHeader)).toBeVisible()
+  }
 }
 ``

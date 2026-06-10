@@ -22,24 +22,28 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Use fewer workers for stability */
   workers: process.env.CI ? 1 : 2,  /* Increase timeout for slow CI environments */
-  timeout: process.env.CI ? 120000 : 30000,  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  timeout: process.env.CI ? 120 * 1000 : 30 * 1000,
+  expect: { timeout: 10 * 1000 },
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
     ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   
-use: {
-  baseURL: 'https://automationexercise.com',
-  storageState: fs.existsSync('storageState.json') ? 'storageState.json' : undefined,
+  testIgnore: 'tests/setup/**',
+  globalSetup: './tests/setup/global-setup.ts',
+  use: {
+    baseURL: 'https://automationexercise.com',
+    // Always reference storageState path; globalSetup will create it before tests run
+    storageState: 'storageState.json',
 
-  actionTimeout: 60000,
-  navigationTimeout: 120000,
+    actionTimeout: 15 * 1000,
+    navigationTimeout: 30 * 1000,
 
-  trace: 'retain-on-failure',
-  screenshot: 'only-on-failure',
-  video: 'retain-on-failure'
-
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   projects: [
