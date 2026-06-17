@@ -13,4 +13,3 @@ test('@search', async ({ page }) => {
     await productPage.searchProduct('Tshirt')
     await expect(page.locator('h2:has-text("Searched Products")')).toBeVisible({ timeout: 15000 })
 })
-

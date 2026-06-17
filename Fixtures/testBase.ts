@@ -1,4 +1,5 @@
 
+export { expect } from '@playwright/test'
 import { test as base } from '@playwright/test'
 import { HomePage } from '../pages/homePage'
 import { SignupPage } from '../pages/signupPage'
@@ -36,6 +37,4 @@ export const test = base.extend<MyFixtures>({
     await use(new CartPage(page));
     }
 
-});
-
-export { expect } from '@playwright/test'
+})

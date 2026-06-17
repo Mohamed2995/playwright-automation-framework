@@ -1,4 +1,3 @@
-
 import { test, expect } from '@playwright/test'
 
 test('Home page loads correctly', async ({ page }) => {

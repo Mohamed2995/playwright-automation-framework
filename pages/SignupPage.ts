@@ -1,4 +1,3 @@
-
 import { Page, expect } from '@playwright/test'
 
 interface UserData {

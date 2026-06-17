@@ -1,8 +1,6 @@
-
 import { Page, expect } from '@playwright/test'
 
-export class LoginPage {
-    constructor(private page: Page) {}
+export class LoginPage {constructor(private page: Page) {}
 
     private readonly loginEmail = 'input[data-qa="login-email"]'
     private readonly loginPassword = 'input[data-qa="login-password"]'

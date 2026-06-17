@@ -61,4 +61,3 @@ export class ProductPage {
     await expect(this.page.locator(this.searchedProductsHeader)).toBeVisible()
   }
 }
-``

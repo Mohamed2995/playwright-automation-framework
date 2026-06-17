@@ -1,4 +1,3 @@
-
 import { test, expect } from '../Fixtures/testBase'
 
 test('@e2e', async ({ productPage, cartPage, page }) => {

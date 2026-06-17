@@ -1,7 +1,6 @@
 import { Page, expect } from '@playwright/test'
 
-export class HomePage {
-    constructor(private page: Page) {}
+export class HomePage {constructor(private page: Page) {}
 
     private readonly signupLoginBtn = 'a[href="/login"]'
     private readonly searchInput = '#search_product'

@@ -1,8 +1,6 @@
-
 import { Page, expect } from '@playwright/test';
 
-export class CartPage {
-    constructor(private page: Page) {}
+export class CartPage {constructor(private page: Page) {}
 
     private readonly cartRow = 'tr[data-product-id], tr.cart_item, td.cart_product'
 
